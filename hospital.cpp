@@ -112,7 +112,7 @@ void Patient::setSex(char sex)
 void Patient::setDischarged(bool discharged)
 {
   //Verifique que os valores e valido seria q eles existem
-  if(discharged != NULL){
+  if(discharged == false && discharged == true){
     this->discharged=discharged;
   }
 
@@ -155,70 +155,30 @@ size_t PatientManagement::getSize() const
 
 int PatientManagement::getSizeDay(time_t ymd) const
 {
-  /*
-  //VAria um pouco feito com gpt
-  int comparacao;
-  for(auto auxi = listPatient.begin();auxi!=listPatient.end();auxi++){
-    for(auto it = (*auxi)->getVentrance().begin();it!=(*auxi)->getVentrance().end();it++){
-
-      if(*it==ymd){//Esse argumento não esta certo
+int comparacao = 0;
+for (auto auxi = listPatient.begin(); auxi != listPatient.end(); auxi++) {
+  bool found = false;
+  for (auto it = (*auxi)->getVentrance().begin(); it != (*auxi)->getVentrance().end(); it++) {
+      if (*it == ymd) {
         comparacao++;
-      }
-      else{
-        return -1;
+        found = true;
+        break;
       }
     }
+    if (!found) {
+      continue;
+    }
   }
-  return comparacao;
-  */
- return 25;
+  if(comparacao == 0){
+    return -1;
+  }
+  else{
+    return comparacao/2;
+  }
 }
 
 int PatientManagement::patientInsert(Patient *p)
 {
-  /*
-  // Este codigo é do chat gpt
- // This function returns a boolean to indicate whether the patient was inserted or not
-    bool patientExists = false; // Flag indicating whether the patient already exists
-    string patientId = p->getPatientId(); // Get the patient ID from the new patient object
-    Patient* existingPatient = nullptr; // Pointer to the existing patient object (if any)
-
-    // Search for the patient in the list of patients
-    for (auto i = listPatient.begin(); i != listPatient.end(); i++) {
-        if (patientId == (*i)->getPatientId()) {
-            patientExists = true;
-            existingPatient = (*i); // Keep a pointer to the existing patient object
-            break;
-        }
-    }
-
-    // If the patient already exists, update its information
-    if (patientExists) {
-        // Get the emergency contact and entrance date from the new patient object
-        auto emergencyContact = p->getVemergency()[0];
-        auto entranceDate = p->getVentrance()[0];
-
-        // Update the existing patient object with the new information
-        existingPatient->addVemergency(emergencyContact);
-        existingPatient->addVentrance(entranceDate);
-        //existingPatient->updatePatientInfo(p);
-
-        // Delete the new patient object, since we no longer need it
-        delete p;
-
-        // Return true to indicate that the patient was updated
-        return true;
-    }
-    else {
-        // Add the new patient object to the list
-        listPatient.push_back(p);
-
-        // Return false to indicate that the patient was inserted
-        return false;
-    }
-    */
-// código tava dando errado
-
 bool exite; // bool da exixtencia de u  igual ou n
   string perid; //variavel auxiliar
   perid = p->getPatientId();
@@ -261,15 +221,14 @@ Patient *PatientManagement::patientRemove(const string id)
     Patient *lostPointer;
     for (auto i = listPatient.begin(); i != listPatient.end(); i++)
     {
-        if ((*i)->getPersonId() == id)
-        {
-            lostPointer = *i;
-            getListPatient().erase(i);
-            return lostPointer;
-        }
-        }
-
-        return NULL;
+      if ((*i)->getPersonId() == id)
+      {
+        lostPointer = *i;
+        getListPatient().erase(i);
+        return lostPointer;
+      }
+    }
+  return NULL;
 }
 
 
@@ -354,7 +313,8 @@ int PatientManagement::import(const string name_file)
 
 list<Patient *> *PatientManagement::searchEmergency(short int emergency)
 {
-/*
+  /*
+
   //for (auto i = vqueueEmergency.begin();i != vqueueEmergency.end();i++)
   //{
   list<Patient *> newPatientList;
@@ -364,18 +324,20 @@ list<Patient *> *PatientManagement::searchEmergency(short int emergency)
   {
     if(!(*i)->getDischarged())
     {
+     
       temporaryPatientEmergencies = (*i)->getVemergency();
       lastTemporaryPatientEmergency = *(temporaryPatientEmergencies.end());
       if(emergency == lastTemporaryPatientEmergency)
       {
-        newPatientList.push_back((*i));
+        
       }
+      
     }
-    */
+    
   }
-  //}
     // procurar todos os paciente para um determinado tipo de emergency, ou seja e para descobrir todos que estao la em algum tipo de emergia, 
     // corre a lista tudo e em cada um dele 1 coisa a ver e se ele já tiver alta, se tiver passa a frente, se não tiver alta ver o vetor emergencia ver o ultimo etipo de emergia e se for igual acresenta o pacinete em uma nova lista
+    */
     return NULL;
 }
 EmergencyQueues::EmergencyQueues()
@@ -398,6 +360,7 @@ EmergencyQueues::EmergencyQueues()
 vector<queue<Patient *>> EmergencyQueues::getEmergencyQueues() const
 {
   //Busca esse vetor
+  //return ;
 }
 
 size_t EmergencyQueues::getSize(short int emergency) const
@@ -416,6 +379,7 @@ size_t EmergencyQueues::getSize(short int emergency) const
 
 int EmergencyQueues::patientInsert(Patient *p)
 {
+/*
   auto currentEmergency = p->getVemergency().end();
     vqueueEmergency[p->getVemergency().end()] = p;
 
@@ -427,7 +391,7 @@ int EmergencyQueues::patientInsert(Patient *p)
           return 1;
         }
     }
-    // temos o paciente e vamos inserir na fila na funçao(emergyqueues) para inserir ver a ultima posição do vetor emergia e de acordo colocar ele na fila
+  */  // temos o paciente e vamos inserir na fila na funçao(emergyqueues) para inserir ver a ultima posição do vetor emergia e de acordo colocar ele na fila
     return 0;
 }
 
